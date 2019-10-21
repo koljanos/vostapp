@@ -2,7 +2,7 @@
 
 ## Right now i am at this part
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ii-templates/page/2#comments
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iii-web-forms
 
 To get the same code on your machine clone the repository with:
 
