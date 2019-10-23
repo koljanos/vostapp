@@ -2,7 +2,7 @@
 
 ## Right now i am at this part
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-vi-profile-page-and-avatars
 
 To get the same code on your machine clone the repository with:
 
