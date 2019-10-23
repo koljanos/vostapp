@@ -2,7 +2,7 @@
 
 ## Right now i am at this part
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-vii-error-handling
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers
 
 To get the same code on your machine clone the repository with:
 
