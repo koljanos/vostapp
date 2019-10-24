@@ -2,7 +2,7 @@
 
 ## Right now i am at this part
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-x-email-support
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xi-facelift
 
 To get the same code on your machine clone the repository with:
 
