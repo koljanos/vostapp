@@ -2,7 +2,7 @@
 
 ## Right now i am at this part
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ix-pagination
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-x-email-support
 
 To get the same code on your machine clone the repository with:
 
