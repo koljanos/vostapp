@@ -14,7 +14,7 @@ from app.email import send_password_reset_email
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        post = Post(title=form.title.data, body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -181,3 +181,11 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+
+@app.route('/full_post/<id>')
+@login_required
+def full_post(id):
+    posts = Post.query.filter_by(id=id).first()
+    return render_template('full_post.html', post = posts)
+    
