@@ -5,7 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-
+uploads/
+_uploads/
+*.db
 # Distribution / packaging
 .Python
 build/
@@ -123,3 +125,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+app.db
+app/.DS_Store

@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
-from wtforms.validators import DataRequired, Length
 
 
 class LoginForm(FlaskForm):
@@ -15,6 +16,8 @@ class LoginForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    photos = UploadSet('photos', IMAGES)
+    photo = FileField('Picture', validators=[FileAllowed(photos, 'Image only!'), FileRequired('File was empty!')])
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):
@@ -62,3 +65,13 @@ class ResetPasswordForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
+
+class UploadForm(FlaskForm):
+
+    validators = [
+        FileRequired(message='There was no file!'),
+        FileAllowed(['jpg'], message='Must be a jpg file!')
+    ]
+
+    input_file = FileField('', validators=validators)
+    submit = SubmitField(label="Upload")

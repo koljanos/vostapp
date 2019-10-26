@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -18,6 +19,11 @@ login = LoginManager(app)
 login.login_view = 'login'
 mail = Mail(app)
 bootstrap = Bootstrap(app)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'uploads')
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
+patch_request_class(app)  # set maximum file size, default is 16MB
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

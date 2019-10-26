@@ -1,7 +1,8 @@
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
-from flask import render_template, flash, redirect, url_for, render_template, request
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -14,7 +15,8 @@ from app.email import send_password_reset_email
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.post.data, author=current_user)
+        post = Post(title=form.title.data,
+                    body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -89,14 +91,21 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
+        photos = UploadSet('photos', IMAGES)
+        filename = photos.save(form.photo.data)
+        current_user.picture = photos.url(filename)
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
+    else:
+        file_url = None
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
+
+
 
 
 @app.before_request
@@ -187,5 +196,5 @@ def reset_password(token):
 @login_required
 def full_post(id):
     posts = Post.query.filter_by(id=id).first()
-    return render_template('full_post.html', post = posts)
-    
+    return render_template('full_post.html', post=posts)
+
