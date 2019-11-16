@@ -9,9 +9,10 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask_bootstrap import Bootstrap
-
+from flask_ckeditor import CKEditor
 
 app = Flask(__name__)
+ckeditor = CKEditor(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
