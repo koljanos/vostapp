@@ -2,7 +2,7 @@
     <tr>
         <td width="70px">
             <a href="{{ url_for('user', username=post.author.username) }}">
-                <img src="{{ post.author.picture }}" class="rounded-circle" width="70" height="70">
+                <img src="{{ post.author.picture }}" class="img-circle" width="70" height="70">
             </a>
         </td>
         <td>
@@ -11,7 +11,7 @@
             </a>'s post:
             <a href="{{ url_for('full_post', id=post.id) }}">{{ post.title}}</a>
             <br>
-            {{ post.body }}
+            {{ post.body|safe }}
         </td>
     </tr>
 </table>

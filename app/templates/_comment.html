@@ -1,0 +1,22 @@
+<div class="media">
+    <div class="media-left media-middle">
+  <a href="{{ url_for('user', username=comment.author.username) }}">
+    <img
+      src="{{ comment.author.picture }}"
+      class="img-circle"
+      width="50"
+      height="50"
+      alt=""
+    />
+  </a>
+    </div>
+  <div class="media-body">
+    <h4 class="mt-0">
+      <a href="{{ url_for('user', username=comment.author.username) }}"
+        >{{ comment.author.username }}</a
+      >
+      Says:
+    </h4>
+    {{ comment.body}}
+  </div>
+</div>

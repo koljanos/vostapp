@@ -1,9 +1,9 @@
 from app import app, db, os
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm, PostFormCK
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm, PostFormCK, CommentForm
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from app.models import User, Post
+from app.models import User, Post, Comment
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.email import send_password_reset_email
@@ -206,11 +206,22 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 
-@app.route('/full_post/<id>')
+@app.route('/full_post/<id>', methods=['GET', 'POST'])
 @login_required
 def full_post(id):
-    posts = Post.query.filter_by(id=id).first()
-    return render_template('full_post.html', post=posts)
+    form = CommentForm()
+    post = Post.query.filter_by(id=id).first()
+    comments = Comment.query.filter_by(post_id=id).all()
+    comments.reverse()
+    if form.validate_on_submit():
+        body = form.body.data
+        comment = Comment(body=body, author=current_user, post_id=id)
+        db.session.add(comment)
+        db.session.commit()
+        comments = Comment.query.filter_by(post_id=id).all()
+        comments.reverse()
+        return render_template('full_post.html', post=post, form=form, comments=comments)
+    return render_template('full_post.html', post=post, form=form, comments=comments)
 
 
 @app.route('/files/<filename>')
@@ -238,6 +249,9 @@ def richpost():
     if form.validate_on_submit():
         title = form.title.data
         body = form.body.data
-        # You may need to store the data in database here
-        return render_template('full_post1.html', title=title, body=body)
+        post = Post(title=title,
+                    body=body, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        return render_template('full_post.html', post=post)
     return render_template('richpost.html', form=form)
