@@ -11,6 +11,8 @@ import os
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 
+
+migrate = Migrate(compare_type=True)
 app = Flask(__name__)
 ckeditor = CKEditor(app)
 app.config.from_object(Config)
@@ -25,6 +27,11 @@ app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'uploads')
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)  # set maximum file size, default is 16MB
+
+app.config['CKEDITOR_SERVE_LOCAL'] = True
+app.config['CKEDITOR_HEIGHT'] = 400
+app.config['CKEDITOR_FILE_UPLOADER'] = 'upload'
+app.config['UPLOADED_PATH'] = os.path.join(basedir, 'uploads')
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

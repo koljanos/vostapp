@@ -3,6 +3,7 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from flask_ckeditor import CKEditor, CKEditorField
 from app.models import User
 
 
@@ -75,3 +76,8 @@ class UploadForm(FlaskForm):
 
     input_file = FileField('', validators=validators)
     submit = SubmitField(label="Upload")
+
+class PostFormCK(FlaskForm):
+    title = StringField('Title')
+    body = CKEditorField('Body', validators=[DataRequired()])
+    submit = SubmitField()
