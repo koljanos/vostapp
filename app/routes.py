@@ -6,6 +6,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_cl
 from app.models import User, Post, Comment
 from werkzeug.urls import url_parse
 from datetime import datetime
+from hashlib import md5
 from app.email import send_password_reset_email
 from flask_ckeditor import upload_fail, upload_success
 
@@ -76,7 +77,11 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, picture= url_for('uploaded_files', filename="default-avatar.png"))
+
+        digest = md5(form.email.data.lower().encode('utf-8')).hexdigest()
+        gravatar = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, 128)
+        user = User(username=form.username.data, email=form.email.data, picture= gravatar)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
