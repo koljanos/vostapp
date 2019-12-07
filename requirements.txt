@@ -5,6 +5,7 @@ blinker==1.4
 Click==7.0
 dominate==2.4.0
 Flask==1.0.3
+Flask-Admin==1.5.4
 Flask-Bootstrap==3.3.7.1
 Flask-CKEditor==0.4.3
 Flask-Login==0.4.1

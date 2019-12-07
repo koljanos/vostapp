@@ -1,7 +1,9 @@
 from datetime import datetime
-from app import db
+from app import db, admin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from app import login
 from hashlib import md5
 from time import time
@@ -39,8 +41,8 @@ class User(UserMixin, db.Model):
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def follow(self, user):
-            if not self.is_following(user):
-                self.followed.append(user)
+        if not self.is_following(user):
+            self.followed.append(user)
 
     def unfollow(self, user):
         if self.is_following(user):
@@ -97,6 +99,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
@@ -107,3 +110,8 @@ class Comment(db.Model):
 
     def __repr__(self):
         return '<Comment {}>'.format(self.body)
+
+
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Post, db.session))
+admin.add_view(ModelView(Comment, db.session))

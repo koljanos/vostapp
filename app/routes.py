@@ -130,7 +130,9 @@ def edit_profile():
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
+        to_zone = tz.tzlocal()
+        local = utc.astimezone(to_zone)
+        current_user.last_seen = local
         db.session.commit()
 
 
