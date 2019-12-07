@@ -64,4 +64,4 @@ if not app.debug:
 
 admin = Admin(app)
 
-from app import routes, models, errors
+from app import routes, models, errors, admin

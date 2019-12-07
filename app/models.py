@@ -1,14 +1,13 @@
 from datetime import datetime
-from app import db, admin
+from app import db, admin, app
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
+from flask_login import UserMixin, current_user
 from app import login
 from hashlib import md5
 from time import time
 import jwt
-from app import app
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 
 @login.user_loader
@@ -112,6 +111,14 @@ class Comment(db.Model):
         return '<Comment {}>'.format(self.body)
 
 
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Post, db.session))
-admin.add_view(ModelView(Comment, db.session))
+
+
+class SecureView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and (current_user.username == 'Admin')
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('index'))
+
+admin.add_view(SecureView(User, db.session))
+admin.add_view(SecureView(Post, db.session))
+admin.add_view(SecureView(Comment, db.session))
