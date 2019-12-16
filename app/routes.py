@@ -1,4 +1,4 @@
-from app import app, db, os
+from app import app, db, os, admin
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm, PostFormCK, CommentForm
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,22 +9,6 @@ from datetime import datetime
 from hashlib import md5
 from app.email import send_password_reset_email
 from flask_ckeditor import upload_fail, upload_success
-
-
-@app.route('/admin', methods=['Get', 'POST'])
-@login_required
-def admin():
-    page = request.args.get('page', 1, type=int)
-    posts = current_user.followed_posts().paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('/bootstrap/index.html', title='Home',
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
-
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -130,7 +114,7 @@ def edit_profile():
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
+        current_user.last_seen = datetime.now()
         db.session.commit()
 
 
