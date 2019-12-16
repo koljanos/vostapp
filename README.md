@@ -14,7 +14,7 @@ Then create venv and install requirements
 
 ``` bash
 cd vostapp
-python3 -m venv venv
+virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
