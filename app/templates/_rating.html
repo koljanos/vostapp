@@ -1,0 +1,46 @@
+<div class="media">
+    <div class="media-left media-middle">
+        <a href="{{ url_for('user', username=rating.author.username) }}">
+            <img src="{{ rating.author.picture }}" class="img-circle" width="50" height="50" alt="" />
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="mt-0">
+            <a href="{{ url_for('user', username=rating.author.username) }}">{{ rating.author.username }}</a>
+            Rates:
+        </h4>
+        {{ rating.body}}
+        <br>
+        Criteria A {{rating.starA}}/8
+        {% for i in range(rating.starA) %}
+        <span class="fa fa-star text-danger"></span>
+        {% endfor %}
+        {% for i in range(8 - rating.starA) %}
+        <span class="fa fa-star"></span>
+        {% endfor %}
+        <br>
+        Criteria B {{rating.starB}}/8
+        {% for i in range(rating.starB) %}
+        <span class="fa fa-star text-danger"></span>
+        {% endfor %}
+        {% for i in range(8 - rating.starB) %}
+        <span class="fa fa-star"></span>
+        {% endfor %}
+        <br>
+        Criteria C {{rating.starC}}/8
+        {% for i in range(rating.starC) %}
+        <span class="fa fa-star text-danger"></span>
+        {% endfor %}
+        {% for i in range(8 - rating.starC) %}
+        <span class="fa fa-star"></span>
+        {% endfor %}
+        <br>
+        Criteria D {{rating.starD}}/8
+        {% for i in range(rating.starD) %}
+        <span class="fa fa-star text-danger"></span>
+        {% endfor %}
+        {% for i in range(8 - rating.starD) %}
+        <span class="fa fa-star"></span>
+        {% endfor %}
+    </div>
+</div>

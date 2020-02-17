@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField, IntegerField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from flask_ckeditor import CKEditor, CKEditorField
 from app.models import User
@@ -86,3 +86,11 @@ class CommentForm(FlaskForm):
     body = TextAreaField('Body', validators=[
         DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Submit')
+
+class RatingForm(FlaskForm):
+    body = TextAreaField('Body')
+    starA = SelectField("A Criterion", choices = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)], coerce= int)
+    starB = SelectField("B Criterion", choices = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)], coerce= int)
+    starC= SelectField("C Criterion", choices = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)], coerce= int)
+    starD = SelectField("D Criterion", choices = [(0, 0),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8)], coerce= int)
+    submit1 = SubmitField('Submit')

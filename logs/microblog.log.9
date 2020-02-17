@@ -1,0 +1,146 @@
+2020-02-12 10:44:01,326 ERROR: Exception on / [GET] [in /home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py:1780]
+Traceback (most recent call last):
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/connections.py", line 583, in connect
+    **kwargs)
+  File "/usr/lib/python3.6/socket.py", line 724, in create_connection
+    raise err
+  File "/usr/lib/python3.6/socket.py", line 713, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/impl.py", line 139, in _do_get
+    self._dec_overflow()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/impl.py", line 136, in _do_get
+    return self._create_connection()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 639, in __connect
+    connection = pool._invoke_creator(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 481, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/__init__.py", line 94, in Connect
+    return Connection(*args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/connections.py", line 325, in __init__
+    self.connect()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/connections.py", line 630, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '212.109.217.233' ([Errno 111] Connection refused)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1830, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 2106, in preprocess_request
+    rv = func()
+  File "./app/routes.py", line 132, in before_request
+    if current_user.is_authenticated:
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/werkzeug/local.py", line 348, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/werkzeug/local.py", line 307, in _get_current_object
+    return self.__local()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_login/utils.py", line 335, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_login/login_manager.py", line 359, in _load_user
+    return self.reload_user()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_login/login_manager.py", line 321, in reload_user
+    user = self.user_callback(user_id)
+  File "./app/models.py", line 14, in load_user
+    return User.query.get(int(id))
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 1069, in _get_impl
+    return db_load_fn(self, primary_key_identity)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/loading.py", line 282, in load_on_pk_identity
+    return q.one()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3300, in one
+    ret = self.one_or_none()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3269, in one_or_none
+    ret = list(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3342, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3364, in _execute_and_instances
+    querycontext, self._connection_from_session, close_with_result=True
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3379, in _get_bind_args
+    mapper=self._bind_mapper(), clause=querycontext.statement, **kw
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3357, in _connection_from_session
+    conn = self.session.connection(**kw)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1124, in connection
+    execution_options=execution_options,
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1130, in _connection_for_bind
+    engine, execution_options
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 431, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2239, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2279, in _wrap_pool_connect
+    e, dialect, self
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1544, in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2275, in _wrap_pool_connect
+    return fn()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 363, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 760, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 492, in checkout
+    rec = pool._do_get()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/impl.py", line 139, in _do_get
+    self._dec_overflow()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/impl.py", line 136, in _do_get
+    return self._create_connection()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 308, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 437, in __init__
+    self.__connect(first_connect_check=True)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 639, in __connect
+    connection = pool._invoke_creator(self)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 481, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/__init__.py", line 94, in Connect
+    return Connection(*args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/connections.py", line 325, in __init__
+    self.connect()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/pymysql/connections.py", line 630, in connect
+    raise exc
+sqlalchemy.exc.OperationalError: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '212.109.217.233' ([Errno 111] Connection refused)")
+(Background on this error at: http://sqlalche.me/e/e3q8)

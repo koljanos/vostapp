@@ -24,4 +24,19 @@
             </li>
         </ul>
     </nav>
+
+	<script>
+        var elem = document.getElementsByClassName('container')[1].getElementsByTagName('img');
+        element = [];
+        element.push.apply(element, elem);
+        element.forEach(function (item, i, element) {
+            var width = item.offsetWidth;
+            var height = item.offsetHeight;
+            if (width > 1000) {
+                item.style.width = '100%';
+                item.style.height = '100%';
+            }
+        });
+    </script>
+
 {% endblock %}

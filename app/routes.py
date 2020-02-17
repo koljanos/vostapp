@@ -1,14 +1,30 @@
 from app import app, db, os, admin
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm, PostFormCK, CommentForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, UploadForm, PostFormCK, CommentForm, RatingForm
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from app.models import User, Post, Comment
+from app.models import User, Post, Comment, Rating
 from werkzeug.urls import url_parse
 from datetime import datetime
 from hashlib import md5
 from app.email import send_password_reset_email
 from flask_ckeditor import upload_fail, upload_success
+
+
+@app.route('/admin', methods=['Get', 'POST'])
+@login_required
+def admin():
+    page = request.args.get('page', 1, type=int)
+    posts = current_user.followed_posts().paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('index', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('index', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('/bootstrap/index.html', title='Home',
+                           posts=posts.items, next_url=next_url,
+                           prev_url=prev_url)
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -199,18 +215,33 @@ def reset_password(token):
 @login_required
 def full_post(id):
     form = CommentForm()
+    form1 = RatingForm()
     post = Post.query.filter_by(id=id).first()
     comments = Comment.query.filter_by(post_id=id).all()
     comments.reverse()
-    if form.validate_on_submit():
+    ratings = Rating.query.filter_by(post_id=id).all()
+    ratings.reverse()
+    if form.submit.data and form.validate():
         body = form.body.data
         comment = Comment(body=body, author=current_user, post_id=id)
         db.session.add(comment)
         db.session.commit()
         comments = Comment.query.filter_by(post_id=id).all()
         comments.reverse()
-        return render_template('full_post.html', post=post, form=form, comments=comments)
-    return render_template('full_post.html', post=post, form=form, comments=comments)
+        return render_template('full_post.html', post=post, form=form, form1=form1, comments=comments, ratings=ratings)
+    if form1.submit1.data and form1.validate():
+        body1 = form1.body.data
+        starA = int(form1.starA.data)
+        starB = int(form1.starB.data)
+        starC = int(form1.starC.data)
+        starD = int(form1.starD.data)
+        rating = Rating(body=body1, author=current_user, post_id=id, starA=starA, starB=starB, starC=starC, starD=starD)
+        db.session.add(rating)
+        db.session.commit()
+        ratings = Rating.query.filter_by(post_id=id).all()
+        ratings.reverse()
+        return render_template('full_post.html', post=post, form=form, form1=form1, comments=comments, ratings=ratings)
+    return render_template('full_post.html', post=post, form=form, form1=form1, ratings=ratings, comments=comments)
 
 
 @app.route('/files/<filename>')
@@ -238,9 +269,8 @@ def richpost():
     if form.validate_on_submit():
         title = form.title.data
         body = form.body.data
-        post = Post(title=title,
-                    body=body, author=current_user)
+        post = Post(title=title, body=body, author=current_user)
         db.session.add(post)
         db.session.commit()
-        return render_template('full_post.html', post=post)
+        return redirect(url_for('index'))
     return render_template('richpost.html', form=form)

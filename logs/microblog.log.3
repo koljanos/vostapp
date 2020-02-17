@@ -1,0 +1,103 @@
+2020-02-12 10:46:25,424 INFO: Microblog startup [in ./app/__init__.py:63]
+2020-02-12 11:10:36,953 ERROR: Exception on /full_post/1 [GET] [in /home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py:1780]
+Traceback (most recent call last):
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "./app/routes.py", line 244, in full_post
+    return render_template('full_post.html', post=post, form=form, form1=form1, ratings=ratings, comments=comments)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/vostapp/web/public/FlaskApp/app/templates/full_post.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/vostapp/web/public/FlaskApp/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/home/vostapp/web/public/FlaskApp/app/templates/base.html", line 52, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/home/vostapp/web/public/FlaskApp/app/templates/full_post.html", line 15, in block "app_content"
+    <a href="{{ url_for('user', username=post.author.username) }}">
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'None' has no attribute 'author'
+2020-02-12 11:22:26,988 ERROR: Exception on /admin/ [GET] [in /home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py:1780]
+Traceback (most recent call last):
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/_compat.py", line 36, in reraise
+    raise value
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/base.py", line 69, in inner
+    return self._run_view(f, *args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/base.py", line 368, in _run_view
+    return fn(self, *args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/base.py", line 452, in index
+    return self.render(self._template)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/base.py", line 308, in render
+    return render_template(template, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/index.html", line 1, in top-level template code
+    {% extends 'admin/master.html' %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/master.html", line 1, in top-level template code
+    {% extends admin_base_template %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 35, in top-level template code
+    {% block page_body %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 42, in block "page_body"
+    {% block main_menu %}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/base.html", line 44, in block "main_menu"
+    {{ layout.menu() }}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/jinja2/runtime.py", line 574, in _invoke
+    rv = self._func(*arguments)
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/templates/bootstrap2/admin/layout.html", line 55, in template
+    {%- if item.is_accessible() and item.is_visible() -%}
+  File "/home/vostapp/web/public/FlaskApp/venv/lib/python3.6/site-packages/flask_admin/menu.py", line 126, in is_accessible
+    return self._view.is_accessible()
+  File "./app/models.py", line 115, in is_accessible
+    return current_user.is_authenticated and (current_user.permission.lower() == 'admin') or current_user.is_authenticated and (current_user.username== 'Egor')
+AttributeError: 'NoneType' object has no attribute 'lower'

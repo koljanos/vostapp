@@ -6,10 +6,9 @@ from app import login
 from hashlib import md5
 from time import time
 import jwt
+from app import app
 from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-
-
+from flask_admin.contrib.sqla import ModelView 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
@@ -30,9 +29,11 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    ratings = db.relationship('Rating', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.now)
     picture = db.Column(db.String(256), nullable=True)
+    permission = db.Column(db.String(64), nullable=True)
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
@@ -40,8 +41,8 @@ class User(UserMixin, db.Model):
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def follow(self, user):
-        if not self.is_following(user):
-            self.followed.append(user)
+            if not self.is_following(user):
+                self.followed.append(user)
 
     def unfollow(self, user):
         if self.is_following(user):
@@ -91,34 +92,43 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     body = db.Column(db.String(16000))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     comments = db.relationship('Comment', backref='comments', lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    ratings = db.relationship('Rating', backref='ratings', lazy='dynamic')
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     body = db.Column(db.String(16000))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     def __repr__(self):
         return '<Comment {}>'.format(self.body)
 
-
-
-
-class SecureView(ModelView):
+class NiggaView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated and (current_user.username == 'Admin')
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('index'))
+        return current_user.is_authenticated and (current_user.permission.lower() == 'admin') or current_user.is_authenticated and (current_user.username== 'Egor')
 
-admin.add_view(SecureView(User, db.session))
-admin.add_view(SecureView(Post, db.session))
-admin.add_view(SecureView(Comment, db.session))
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    starA = db.Column(db.Integer)
+    starB = db.Column(db.Integer)
+    starC = db.Column(db.Integer)
+    starD = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    
+    def __repr__(self):
+        return '<Rating {}>'.format(self.body)
+
+admin.add_view(NiggaView(User,db.session))
+admin.add_view(NiggaView(Post,db.session))
+admin.add_view(NiggaView(Comment,db.session))
+admin.add_view(NiggaView(Rating,db.session))
